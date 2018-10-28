@@ -3,22 +3,21 @@ using System.Windows.Input;
 using GalaSoft.MvvmLight;
 using GalaSoft.MvvmLight.Command;
 using WordLearnerWPF.Core.Abstract;
+using WordLearnerWPF.Services.Abstract;
 
 namespace WordLearnerWPF.ViewModel
 {   
     public class MainViewModel : CoreViewModel
     {
-      
-        public MainViewModel()
+        private ICoreNavigationServie _navigationServie;
+        public MainViewModel(ICoreNavigationServie coreNavigationServie)
         {
-         Test = "NoTest";  
+            _navigationServie = coreNavigationServie;
         }
-
-        public string Test { get; set; }
 
         public ICommand SettingsCommand => new RelayCommand(()=>
         {
-            throw new System.Exception();
+            _navigationServie.NavigateTo("HomeView");
         });
 
         public override Task Initialize()
