@@ -9,8 +9,8 @@
       DataContext="{Binding Home, Source={StaticResource Locator}}"
       d:DesignHeight="450" d:DesignWidth="800"
       Title="HomeView">
+    <StackPanel Orientation="Vertical">
 
-    <Grid>
-        <TextBlock Text="{Binding Test}"/>
-    </Grid>
+        <Button Command="{Binding AddFileCommand}">Add File</Button>
+    </StackPanel>
 </Page>

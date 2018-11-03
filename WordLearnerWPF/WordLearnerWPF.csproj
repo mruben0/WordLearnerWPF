@@ -140,10 +140,15 @@
     <Compile Include="Pages\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Params\Abstract\IStaticParams.cs" />
+    <Compile Include="Params\Impl\FileDto.cs" />
+    <Compile Include="Params\Impl\StaticParams.cs" />
     <Compile Include="Services\Abstract\ICoreNavigationServie.cs" />
     <Compile Include="Services\Abstract\IDocumentService.cs" />
+    <Compile Include="Services\Abstract\IIOService.cs" />
     <Compile Include="Services\Impl\CoreNavigationService.cs" />
     <Compile Include="Services\Impl\DocumentService.cs" />
+    <Compile Include="Services\Impl\IOService.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -206,5 +211,6 @@
   <ItemGroup>
     <Resource Include="Resources\Entypo-license.txt" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>
