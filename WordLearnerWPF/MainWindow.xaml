@@ -26,7 +26,7 @@
             </Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
-    <Frame Name="MainFrame">
+    <Frame Name="MainFrame"  NavigationUIVisibility="Hidden">
        
     </Frame>
 </Controls:MetroWindow>

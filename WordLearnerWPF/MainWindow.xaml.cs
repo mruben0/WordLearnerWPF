@@ -10,13 +10,14 @@ namespace WordLearnerWPF
             InitializeComponent();
             Loaded += MainWindow_Loaded;
         }
-
+    
         private void MainWindow_Loaded(object sender, System.Windows.RoutedEventArgs e)
         {
             if (DataContext is CoreViewModel vm)
             {
-                vm.Initialize();
+                vm.Initialize(Parameter);
             }
         }
+        public object Parameter { get; set; }
     }
 }

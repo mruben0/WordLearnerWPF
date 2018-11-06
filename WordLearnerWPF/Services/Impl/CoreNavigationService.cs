@@ -1,4 +1,5 @@
-﻿using System;
+﻿using CommonServiceLocator;
+using System;
 using System.Collections.Generic;
 using System.ComponentModel;
 using System.Linq;
@@ -8,7 +9,9 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Media;
+using WordLearnerWPF.Pages.Abstract;
 using WordLearnerWPF.Services.Abstract;
+using WordLearnerWPF.ViewModel;
 
 namespace WordLearnerWPF.Services.Impl
 {
@@ -77,6 +80,17 @@ namespace WordLearnerWPF.Services.Impl
                 Parameter = parameter;
                 _historic.Add(pageKey);
                 CurrentPageKey = pageKey;
+            }
+        }
+
+        public virtual void Navigate(Type viewModel, object parameter)
+        {
+            var viewInstance = ViewModelLocator.TryGetViewType(viewModel);
+            if (viewInstance != null && viewInstance is IParametrizedView<object> pvi)
+            {
+                pvi.Parameter = parameter;
+                var frame = GetDescendantFromName(Application.Current.MainWindow, "MainFrame") as Frame;
+                frame.Content = pvi;
             }
         }
 

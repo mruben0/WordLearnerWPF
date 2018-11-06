@@ -9,6 +9,6 @@ namespace WordLearnerWPF.Core.Abstract
 {
     public abstract class CoreViewModel : ViewModelBase
     {
-        public abstract Task Initialize();
+        public abstract Task Initialize<T>(T param);
     }
 }

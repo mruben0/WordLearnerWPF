@@ -137,7 +137,11 @@
       <SubType>Designer</SubType>
     </ApplicationDefinition>
     <Compile Include="Core\Abstract\CoreViewModel.cs" />
-    <Compile Include="Pages\HomeView.xaml.cs">
+    <Compile Include="Pages\Abstract\IParametrizedView.cs" />
+    <Compile Include="Pages\Impl\GameView.xaml.cs">
+      <DependentUpon>GameView.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\Impl\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
     <Compile Include="Params\Abstract\IStaticParams.cs" />
@@ -149,6 +153,7 @@
     <Compile Include="Services\Impl\CoreNavigationService.cs" />
     <Compile Include="Services\Impl\DocumentService.cs" />
     <Compile Include="Services\Impl\IOService.cs" />
+    <Compile Include="ViewModel\GameViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
@@ -164,7 +169,11 @@
       <DependentUpon>MainWindow.xaml</DependentUpon>
       <SubType>Code</SubType>
     </Compile>
-    <Page Include="Pages\HomeView.xaml">
+    <Page Include="Pages\Impl\GameView.xaml">
+      <Generator>MSBuild:Compile</Generator>
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Include="Pages\Impl\HomeView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

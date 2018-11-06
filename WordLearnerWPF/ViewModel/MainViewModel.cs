@@ -21,7 +21,7 @@ namespace WordLearnerWPF.ViewModel
 
 
 
-        public override Task Initialize()
+        public override Task Initialize<T>(T param)
         {
             CreateFolders();
             _navigationServie.NavigateTo("HomeView");
