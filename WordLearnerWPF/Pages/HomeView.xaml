@@ -11,6 +11,23 @@
       Title="HomeView">
     <StackPanel Orientation="Vertical">
 
+        <ListView ItemsSource="{Binding Files}"
+                  SelectedItem="{Binding SelectedFile}">
+            <ListView.ContextMenu>
+                <ContextMenu Background="WhiteSmoke">
+                    <MenuItem Command="{Binding StartCommand}" Header="Start"/>
+                    <MenuItem Command="{Binding DownloadCommand}" Header="Download"/>
+                    <MenuItem Command="{Binding OpenCommand}" Header="Open"/>
+                    <MenuItem Command="{Binding DeleteCommand}" Header="Delete"/>                    
+                </ContextMenu>
+            </ListView.ContextMenu>
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding Name}" />
+                </GridView>
+            </ListView.View>
+        </ListView>
+        
         <Button Command="{Binding AddFileCommand}">Add File</Button>
     </StackPanel>
 </Page>

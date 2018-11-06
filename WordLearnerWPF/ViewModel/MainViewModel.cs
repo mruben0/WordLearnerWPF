@@ -19,8 +19,8 @@ namespace WordLearnerWPF.ViewModel
             _staticParams = staticParams ?? throw new ArgumentNullException(nameof(staticParams));
         }
 
-       
-        
+
+
         public override Task Initialize()
         {
             CreateFolders();
@@ -28,6 +28,12 @@ namespace WordLearnerWPF.ViewModel
 
             return Task.FromResult(1);
         }
+
+        public ICommand SettingsCommand => new RelayCommand(() =>
+        {
+            Console.WriteLine("Testing");
+            Console.Read();
+        });
 
         private void CreateFolders()
         {

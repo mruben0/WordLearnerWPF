@@ -22,6 +22,7 @@ namespace WordLearnerWPF.Services.Impl
         {
             string FileName;
             Microsoft.Win32.OpenFileDialog dlg = new Microsoft.Win32.OpenFileDialog();
+            dlg.Filter = "Excel Files|*.xls;*.xlsx;*.xlsm|txt files (*.txt)|*.txt|Comma Sep| *.CSV"; 
             if (dlg.ShowDialog() ?? false)
             {
                 FileName = Path.GetFileName(dlg.FileName);
