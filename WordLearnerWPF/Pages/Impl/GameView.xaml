@@ -9,6 +9,46 @@
       d:DesignHeight="450" d:DesignWidth="800"
       Title="GameView">
     <StackPanel>
-        <Button Content="{Binding DocumentDto.Name}"/>
+
+        <Button Margin="5" Command="{Binding OpenFile}" Content="{Binding DocumentDto.Name}"/>
+
+        <StackPanel Margin="5" Orientation="Horizontal">
+            <TextBlock Text="Ask Label"/>
+            <TextBox Margin="5" Width="20" Text="{Binding StartLabel}"/>
+        </StackPanel>
+        <StackPanel Margin="5" Orientation="Horizontal">
+            <TextBlock Text="Answer Label"/>
+            <TextBox  Margin="5" Width="20" Text="{Binding EndLabel}"/>
+        </StackPanel>
+        <StackPanel Margin="5" Orientation="Horizontal">
+            <TextBlock Text="Stat Index"/>
+            <TextBox  Margin="5" Width="20" Text="{Binding StartInd}"/>
+        </StackPanel>
+        <StackPanel Margin="5" Orientation="Horizontal">
+            <TextBlock Text="End Index"/>
+            <TextBox  Margin="5" Width="25" Text="{Binding EndInd}"/>
+        </StackPanel>
+
+        <Button Width="100" Content="Start" Command="{Binding StartCommand}"/>
+
+        <StackPanel Margin="10" Orientation="Vertical">
+            <StackPanel Orientation="Horizontal">
+                <Label>Word</Label>
+                <TextBlock Margin="5" Width="100" Text="{Binding AskWord}"/>
+                <Label>Translation</Label>
+                <TextBox Margin="5"  Width="100"  Text="{Binding Answer}"/>
+            </StackPanel>
+            <Button Command="{Binding SubmitAnswerCommand}">Submit</Button>
+        </StackPanel>
+        <StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="5" Text="Result"/>
+                <TextBlock Text="{Binding SingleResult}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal">
+                <TextBlock Margin="5" Text="Answer"/>                
+                <TextBlock Text="{Binding RightAnswer}"/>
+            </StackPanel>
+        </StackPanel>
     </StackPanel>
 </Page>

@@ -28,7 +28,7 @@
     </Controls:MetroWindow.RightWindowCommands>
     <Grid>
         <Grid.RowDefinitions>
-            <RowDefinition Height="50"/>
+            <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
        
@@ -49,7 +49,7 @@
             </Rectangle>
         </Button>
 
-        <Frame Grid.Row="1" Name="MainFrame"  NavigationUIVisibility="Hidden">
+        <Frame Margin="10" Grid.Row="1" Name="MainFrame"  NavigationUIVisibility="Hidden">
 
         </Frame>
     </Grid>

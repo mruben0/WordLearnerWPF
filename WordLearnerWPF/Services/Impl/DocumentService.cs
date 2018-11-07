@@ -25,9 +25,9 @@ namespace WordLearnerWPF.Services.Impl
             else { return false; }
         }
 
-        public List<string> AddToList(string path, int start, int end, string label = "A")
+        public Dictionary<string, string> GetDictionaryFromXls(string path, int start, int end, string askLabel = "A", string answLabel = "B")
         {
-            List<string> list = new List<string>();
+            Dictionary<string, string> dictionary = new Dictionary<string, string>();
 
             using (SpreadsheetDocument document =
                 SpreadsheetDocument.Open(path, false))
@@ -54,59 +54,66 @@ namespace WordLearnerWPF.Services.Impl
                 {
                     for (int i = start; i <= count; i++)
                     {
-                        list.Add(GetCellData(label, i, wsPart, wbPart));
+                        string ask = GetCellData(askLabel, i, wsPart, wbPart);
+                        string answ = GetCellData(answLabel, i, wsPart, wbPart);
+                        if (!dictionary.ContainsKey(ask))
+                        {
+                            dictionary.Add(ask, answ);
+                        }
                     }
                 }
+                return dictionary;
+
             }
-            return list;
-        }
 
-        private string GetCellData(string label, int i, WorksheetPart wsPart, WorkbookPart wbPart)
-        {
-            string value = "";
-            Cell theCell = wsPart.Worksheet.Descendants<Cell>().
-               Where(c => c.CellReference == $"{label}{i}").FirstOrDefault();
 
-            if (theCell != null)
+            string GetCellData(string label, int i, WorksheetPart wsPart, WorkbookPart wbPart)
             {
-                value = theCell.InnerText;
+                string value = "";
+                Cell theCell = wsPart.Worksheet.Descendants<Cell>().
+                   Where(c => c.CellReference == $"{label}{i}").FirstOrDefault();
 
-                if (theCell.DataType != null)
+                if (theCell != null)
                 {
-                    switch (theCell.DataType.Value)
+                    value = theCell.InnerText;
+
+                    if (theCell.DataType != null)
                     {
-                        case CellValues.SharedString:
+                        switch (theCell.DataType.Value)
+                        {
+                            case CellValues.SharedString:
 
-                            var stringTable =
-                                wbPart.GetPartsOfType<SharedStringTablePart>()
-                                .FirstOrDefault();
+                                var stringTable =
+                                    wbPart.GetPartsOfType<SharedStringTablePart>()
+                                    .FirstOrDefault();
 
-                            if (stringTable != null)
-                            {
-                                value =
-                                    stringTable.SharedStringTable
-                                    .ElementAt(int.Parse(value)).InnerText;
-                            }
-                            else value = "00";
-                            break;
+                                if (stringTable != null)
+                                {
+                                    value =
+                                        stringTable.SharedStringTable
+                                        .ElementAt(int.Parse(value)).InnerText;
+                                }
+                                else value = "00";
+                                break;
 
-                        case CellValues.Boolean:
-                            switch (value)
-                            {
-                                case "0":
-                                    value = "FALSE";
-                                    break;
+                            case CellValues.Boolean:
+                                switch (value)
+                                {
+                                    case "0":
+                                        value = "FALSE";
+                                        break;
 
-                                default:
-                                    value = "TRUE";
-                                    break;
-                            }
-                            break;
+                                    default:
+                                        value = "TRUE";
+                                        break;
+                                }
+                                break;
+                        }
                     }
                 }
+                else value = "--";
+                return value;
             }
-            else value = "--";
-            return value;
         }
     }
 }

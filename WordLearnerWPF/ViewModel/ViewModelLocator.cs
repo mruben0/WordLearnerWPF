@@ -41,9 +41,12 @@ namespace WordLearnerWPF.ViewModel
         {
             var staticParams = new StaticParams();
             var ioService = new IOService(staticParams);
+            var documentService = new DocumentService();
 
             SimpleIoc.Default.Register<IStaticParams>(() => staticParams);
             SimpleIoc.Default.Register<IIOService>(() => ioService);
+            SimpleIoc.Default.Register<IDocumentService>(() => documentService);
+
         }
 
         public static IParametrizedView<object> TryGetViewType(Type vmType)

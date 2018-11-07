@@ -8,7 +8,7 @@ namespace WordLearnerWPF.Services.Abstract
 {
     public interface IDocumentService
     {
-        bool IsValidFormat(string format, string path);
-        List<string> AddToList(string path, int start, int end, string label = "A");
+        Dictionary<string, string> GetDictionaryFromXls(string path, int start, int end, string askLabel = "A", string answLabel = "B");
+
     }
 }
