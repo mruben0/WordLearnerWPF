@@ -63,8 +63,8 @@ namespace WordLearnerWPF.ViewModel
 
         public MainViewModel Main => ServiceLocator.Current.GetInstance<MainViewModel>();
         public HomeViewModel Home => ServiceLocator.Current.GetInstance<HomeViewModel>();
-        public GameViewModel GameViewModel => ServiceLocator.Current.GetInstance<GameViewModel>();
-        
+        public GameViewModel GameVM => ServiceLocator.Current.GetInstance<GameViewModel>();
+
         public static void Cleanup()
         {
         }

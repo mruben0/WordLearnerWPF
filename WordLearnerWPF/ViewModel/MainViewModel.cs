@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using GalaSoft.MvvmLight.Command;
 using WordLearnerWPF.Core.Abstract;
+using WordLearnerWPF.Pages;
 using WordLearnerWPF.Params.Abstract;
 using WordLearnerWPF.Services.Abstract;
 
@@ -24,8 +25,7 @@ namespace WordLearnerWPF.ViewModel
         public override Task Initialize<T>(T param)
         {
             CreateFolders();
-            _navigationServie.NavigateTo("HomeView");
-
+            _navigationServie.NavigateTo(nameof(HomeView));
             return Task.FromResult(1);
         }
 
@@ -33,6 +33,11 @@ namespace WordLearnerWPF.ViewModel
         {
             Console.WriteLine("Testing");
             Console.Read();
+        });
+
+        public ICommand GoBack => new RelayCommand(() =>
+        {
+            _navigationServie.GoBack();
         });
 
         private void CreateFolders()

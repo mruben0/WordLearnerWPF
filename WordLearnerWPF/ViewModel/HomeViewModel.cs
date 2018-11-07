@@ -39,7 +39,7 @@ namespace WordLearnerWPF.ViewModel
 
         public ICommand StartCommand => new RelayCommand(() =>
         {
-           _navigationServie.Navigate(typeof(GameViewModel), "sjdsf");
+            _navigationServie.Navigate(typeof(GameViewModel), SelectedFile);
         });
 
         public ICommand AddFileCommand => new RelayCommand(() =>

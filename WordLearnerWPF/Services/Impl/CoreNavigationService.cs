@@ -86,11 +86,14 @@ namespace WordLearnerWPF.Services.Impl
         public virtual void Navigate(Type viewModel, object parameter)
         {
             var viewInstance = ViewModelLocator.TryGetViewType(viewModel);
-            if (viewInstance != null && viewInstance is IParametrizedView<object> pvi)
+            if (viewInstance != null )
             {
-                pvi.Parameter = parameter;
+                var pagekey = viewInstance.GetType().Name;
+                viewInstance.Parameter = parameter;                
                 var frame = GetDescendantFromName(Application.Current.MainWindow, "MainFrame") as Frame;
-                frame.Content = pvi;
+                frame.Content = viewInstance;
+                _historic.Add(pagekey);
+                CurrentPageKey = pagekey;
             }
         }
 

@@ -26,7 +26,31 @@
             </Button>
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
-    <Frame Name="MainFrame"  NavigationUIVisibility="Hidden">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="50"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
        
-    </Frame>
+        <Button 
+            Width="50"
+            Height="50"
+            Grid.Row="0"
+            HorizontalAlignment="Left"
+            Margin="5"
+            Command="{Binding GoBack}"
+            Style="{DynamicResource MetroCircleButtonStyle}">
+            <Rectangle Width="20"
+                Height="20"
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_arrow_left}" />
+                </Rectangle.OpacityMask>
+            </Rectangle>
+        </Button>
+
+        <Frame Grid.Row="1" Name="MainFrame"  NavigationUIVisibility="Hidden">
+
+        </Frame>
+    </Grid>
 </Controls:MetroWindow>
