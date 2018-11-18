@@ -54,8 +54,19 @@ namespace WordLearnerWPF.Services.Impl
                 {
                     for (int i = start; i <= count; i++)
                     {
-                        string ask = GetCellData(askLabel, i, wsPart, wbPart);
-                        string answ = GetCellData(answLabel, i, wsPart, wbPart);
+                        string ask = string.Empty;
+                        string answ = string.Empty;
+
+                        foreach (var label in askLabel)
+                        {
+                            ask += GetCellData(label.ToString(), i, wsPart, wbPart) + " ";
+                        }
+                        foreach (var label in answLabel)
+                        {
+                            answ += GetCellData(label.ToString(), i, wsPart, wbPart) + " ";
+                        }
+                        ask = ask.Remove(ask.Length - 1, 1);
+                        answ = answ.Remove(answ.Length - 1, 1);
                         if (!dictionary.ContainsKey(ask))
                         {
                             dictionary.Add(ask, answ);
@@ -63,13 +74,12 @@ namespace WordLearnerWPF.Services.Impl
                     }
                 }
                 return dictionary;
-
             }
 
 
             string GetCellData(string label, int i, WorksheetPart wsPart, WorkbookPart wbPart)
             {
-                string value = "";
+                string value = string.Empty;
                 Cell theCell = wsPart.Worksheet.Descendants<Cell>().
                    Where(c => c.CellReference == $"{label}{i}").FirstOrDefault();
 

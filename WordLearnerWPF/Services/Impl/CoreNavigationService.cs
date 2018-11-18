@@ -49,17 +49,20 @@ namespace WordLearnerWPF.Services.Impl
             _pagesByKey = new Dictionary<string, Uri>();
             _historic = new List<string>();
         }
+        
         public void GoBack()
         {
-            if (_historic.Count > 1)
+            if (CanGoBack)
             {
                 _historic.RemoveAt(_historic.Count - 1);
                 NavigateTo(_historic.Last(), null);
             }
+            OnPropertyChanged(nameof(CanGoBack));
         }
         public void NavigateTo(string pageKey)
         {
             NavigateTo(pageKey, null);
+            OnPropertyChanged(nameof(CanGoBack));
         }
 
         public virtual void NavigateTo(string pageKey, object parameter)
@@ -81,6 +84,7 @@ namespace WordLearnerWPF.Services.Impl
                 _historic.Add(pageKey);
                 CurrentPageKey = pageKey;
             }
+            OnPropertyChanged(nameof(CanGoBack));
         }
 
         public virtual void Navigate(Type viewModel, object parameter)
@@ -95,6 +99,7 @@ namespace WordLearnerWPF.Services.Impl
                 _historic.Add(pagekey);
                 CurrentPageKey = pagekey;
             }
+            OnPropertyChanged(nameof(CanGoBack));
         }
 
         public void Configure(string key, Uri pageType)
@@ -149,5 +154,8 @@ namespace WordLearnerWPF.Services.Impl
             if (handler != null) handler(this, new PropertyChangedEventArgs(propertyName));
         }
         #endregion
+
+        public bool CanGoBack => _historic.Count > 1;
+
     }
 }

@@ -6,29 +6,47 @@
       xmlns:local="clr-namespace:WordLearnerWPF.Pages"
       DataContext="{Binding GameVM, Source={StaticResource Locator}}"
       mc:Ignorable="d" 
-      d:DesignHeight="450" d:DesignWidth="800"
+      d:DesignHeight="450"
+      d:DesignWidth="800"
       Title="GameView">
     <StackPanel>
+        <Button             
+            Width="50"
+            Height="50"
+            HorizontalAlignment="Left"
+            Margin="5"
+            Command="{Binding GoBack}"
+            Style="{DynamicResource MetroCircleButtonStyle}">
+            <Rectangle Width="20"
+                Height="20"
+                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
+                <Rectangle.OpacityMask>
+                    <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_arrow_left}" />
+                </Rectangle.OpacityMask>
+            </Rectangle>
+        </Button>
 
         <Button Margin="5" Command="{Binding OpenFile}" Content="{Binding DocumentDto.Name}"/>
 
-        <StackPanel Margin="5" Orientation="Horizontal">
-            <TextBlock Text="Ask Label"/>
-            <TextBox Margin="5" Width="20" Text="{Binding StartLabel}"/>
+        <StackPanel Orientation="Horizontal">
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <TextBlock Text="Ask Label"/>
+                <TextBox Margin="5" Width="20" MaxLength="2" Text="{Binding StartLabel}"/>
+            </StackPanel>
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <TextBlock Text="Answer Label"/>
+                <TextBox  Margin="5" Width="20" MaxLength="2" Text="{Binding EndLabel}"/>
+            </StackPanel>
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <TextBlock Text="Stat Index"/>
+                <TextBox  Margin="5" Width="20" Text="{Binding StartInd}"/>
+            </StackPanel>
+            <StackPanel Margin="5" Orientation="Horizontal">
+                <TextBlock Text="End Index"/>
+                <TextBox  Margin="5" Width="25" Text="{Binding EndInd}"/>
+            </StackPanel>
         </StackPanel>
-        <StackPanel Margin="5" Orientation="Horizontal">
-            <TextBlock Text="Answer Label"/>
-            <TextBox  Margin="5" Width="20" Text="{Binding EndLabel}"/>
-        </StackPanel>
-        <StackPanel Margin="5" Orientation="Horizontal">
-            <TextBlock Text="Stat Index"/>
-            <TextBox  Margin="5" Width="20" Text="{Binding StartInd}"/>
-        </StackPanel>
-        <StackPanel Margin="5" Orientation="Horizontal">
-            <TextBlock Text="End Index"/>
-            <TextBox  Margin="5" Width="25" Text="{Binding EndInd}"/>
-        </StackPanel>
-
+       
         <Button Width="100" Content="Start" Command="{Binding StartCommand}"/>
 
         <StackPanel Margin="10" Orientation="Vertical">
@@ -36,19 +54,44 @@
                 <Label>Word</Label>
                 <TextBlock Margin="5" Width="100" Text="{Binding AskWord}"/>
                 <Label>Translation</Label>
-                <TextBox Margin="5"  Width="100"  Text="{Binding Answer}"/>
+                <TextBox Margin="5" Width="100"  
+                         Text="{Binding Answer, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}"
+                         IsEnabled="{Binding AllNeedadPopsSelected}">
+                    <TextBox.InputBindings>
+                        <KeyBinding Command="{Binding SubmitAnswerCommand}" Key="Return" />
+                        <KeyBinding Command="{Binding SubmitAnswerCommand}" Key="Enter" />
+                    </TextBox.InputBindings>
+                </TextBox>
             </StackPanel>
-            <Button Command="{Binding SubmitAnswerCommand}">Submit</Button>
+            <Button Command="{Binding SubmitAnswerCommand}"
+                    IsEnabled="{Binding AllNeedadPopsSelected}"
+                    Content="{Binding SubmitType}"/>
         </StackPanel>
-        <StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Margin="5" Text="Result"/>
-                <TextBlock Text="{Binding SingleResult}"/>
-            </StackPanel>
-            <StackPanel Orientation="Horizontal">
-                <TextBlock Margin="5" Text="Answer"/>                
-                <TextBlock Text="{Binding RightAnswer}"/>
-            </StackPanel>
-        </StackPanel>
+        <Grid>
+            <Grid.RowDefinitions>
+                <RowDefinition/>
+                <RowDefinition/>
+            </Grid.RowDefinitions>
+            <Grid.ColumnDefinitions>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="*"/>
+                <ColumnDefinition Width="auto"/>
+                <ColumnDefinition Width="auto"/>
+
+            </Grid.ColumnDefinitions>
+
+            <TextBlock Grid.Column="0" Grid.Row="0" Margin="5" Text="Result"/>
+            <TextBlock Grid.Column="1" Grid.Row="0" Text="{Binding SingleResult}"/>
+
+            <TextBlock Grid.Column="0" Grid.Row="1" Margin="5" Text="Answer"/>
+            <TextBlock Grid.Column="1" Grid.Row="1" Text="{Binding RightAnswer}"/>
+
+            <TextBlock Grid.Column="2" Grid.Row="0" Margin="5" Text="False Count"/>
+            <TextBlock Grid.Column="3" Grid.Row="0" Text="{Binding FalseCount}"/>
+
+            <TextBlock Grid.Column="2" Grid.Row="1" Margin="5" Text="Right Count"/>
+            <TextBlock Grid.Column="3" Grid.Row="1" Text="{Binding RightCount}"/>
+            
+        </Grid>
     </StackPanel>
 </Page>

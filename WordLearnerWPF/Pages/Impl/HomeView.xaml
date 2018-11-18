@@ -19,8 +19,9 @@
           Value="Center" />
         </Style>
     </Page.Resources>
-    <StackPanel Orientation="Vertical">
-
+    
+    <ScrollViewer>        
+    <StackPanel Orientation="Vertical">      
         <ListView ItemsSource="{Binding Files}"
                   SelectedItem="{Binding SelectedFile}">
             <ListView.ContextMenu>
@@ -40,4 +41,6 @@
         
         <Button Command="{Binding AddFileCommand}">Add File</Button>
     </StackPanel>
+    </ScrollViewer>
+
 </Page>

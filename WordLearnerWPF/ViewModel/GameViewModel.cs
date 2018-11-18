@@ -15,9 +15,9 @@ namespace WordLearnerWPF.ViewModel
 {
     public class GameViewModel : CoreViewModel
     {
-        private ICoreNavigationServie _navigationService;
         private IStaticParams _staticParams;
         private IDocumentService _documentService;
+        private ICoreNavigationServie _navigationService;
         private FileDto _documetDTO;
         private Dictionary<string, string> _wordDictionary;
         private int? _startind;
@@ -26,8 +26,12 @@ namespace WordLearnerWPF.ViewModel
         private string _endLabel;
         private string _askWord;
         private string _answer;
-        private bool _singleResult;
+        private bool? _singleResult;
         private string _rightAnswer;
+        private string _submitCommandName;
+        private SubmitType _submitType;
+        private int _rightCount;
+        private int _falseCount;
 
         public GameViewModel(ICoreNavigationServie navigationService, 
                             IStaticParams staticParams,
@@ -52,26 +56,51 @@ namespace WordLearnerWPF.ViewModel
 
         public ICommand StartCommand => new RelayCommand(() =>
         {
-            if (allNeedadPopsSelected)
+            if (AllNeedadPopsSelected)
             {
                 getMyDictionary();
                 step();
             }
+            RaisePropertyChanged(nameof(AllNeedadPopsSelected));
         });
 
+        public ICommand GoBack => new RelayCommand(() =>
+        {
+            _navigationService.GoBack();
+        });
 
         public ICommand SubmitAnswerCommand => new RelayCommand(() =>
         {            
-            SingleResult = Answer == WordDictionary[AskWord];
-            RightAnswer = WordDictionary[AskWord];
-            step();
+            if (SubmitType == SubmitType.Submit)
+            {
+                SingleResult = Answer == WordDictionary[AskWord];
+                RightAnswer = WordDictionary[AskWord];
+                if (SingleResult == true)
+                {                   
+                    SubmitType = SubmitType.Next;
+                    RightCount++;
+                }
+                else
+                {
+                    FalseCount++;
+                }
+            }
+            else
+            {              
+                if (SingleResult == true)
+                {
+                    RightAnswer = string.Empty;
+                    Answer = string.Empty;
+                    step();
+                    SubmitType = SubmitType.Submit;
+                }
+            }            
         });
 
         private void getMyDictionary()
         {
-            
                 WordDictionary = _documentService.GetDictionaryFromXls(DocumentDto.Path, StartInd.Value, EndInd, StartLabel, EndLabel);
-                RaisePropertyChanged(nameof(WordDictionary));                    
+                RaisePropertyChanged(nameof(WordDictionary));                   
         }
 
         private void step()
@@ -146,7 +175,7 @@ namespace WordLearnerWPF.ViewModel
             }
         }
 
-        public bool SingleResult
+        public bool? SingleResult
         {
             get { return _singleResult; }
             set { _singleResult = value;
@@ -162,6 +191,37 @@ namespace WordLearnerWPF.ViewModel
             }
         }
 
-        bool allNeedadPopsSelected => EndLabel != null && StartLabel != null && StartInd != null && EndInd != 0;
+        public string SubmitCommandName
+        {
+            get { return _submitCommandName; }
+            set { _submitCommandName = value; }
+        }
+
+        public SubmitType SubmitType
+        {
+            get { return _submitType; }
+            set { _submitType = value;
+                RaisePropertyChanged(nameof(SubmitType));
+            }
+        }
+
+        public int RightCount
+        {
+            get { return _rightCount; }
+            set { _rightCount = value;
+                RaisePropertyChanged(nameof(RightCount));
+            }
+        }
+
+        public int FalseCount
+        {
+            get { return _falseCount; }
+            set { _falseCount = value;
+                RaisePropertyChanged(nameof(FalseCount));
+            }
+        }
+
+
+        public bool AllNeedadPopsSelected => EndLabel != null && StartLabel != null && StartInd != null && EndInd != 0;
     }
 }

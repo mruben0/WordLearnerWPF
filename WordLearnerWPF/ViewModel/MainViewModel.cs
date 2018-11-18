@@ -12,15 +12,13 @@ namespace WordLearnerWPF.ViewModel
 {
     public class MainViewModel : CoreViewModel
     {
-        private ICoreNavigationServie _navigationServie;
+        private ICoreNavigationServie _navigationServie { get; }
         private IStaticParams _staticParams;
         public MainViewModel(ICoreNavigationServie coreNavigationServie, IStaticParams staticParams)
         {
             _navigationServie = coreNavigationServie ?? throw new ArgumentNullException(nameof(coreNavigationServie));
             _staticParams = staticParams ?? throw new ArgumentNullException(nameof(staticParams));
         }
-
-
 
         public override Task Initialize<T>(T param)
         {
@@ -51,6 +49,5 @@ namespace WordLearnerWPF.ViewModel
                 }
             }
         }
-
     }
 }

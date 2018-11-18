@@ -5,14 +5,11 @@ using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
-using System.Windows;
 using System.Windows.Input;
 using WordLearnerWPF.Core.Abstract;
-using WordLearnerWPF.Pages;
 using WordLearnerWPF.Params.Abstract;
 using WordLearnerWPF.Params.Impl;
 using WordLearnerWPF.Services.Abstract;
-using WordLearnerWPF.Services.Impl;
 
 namespace WordLearnerWPF.ViewModel
 {

@@ -7,5 +7,6 @@ namespace WordLearnerWPF.Services.Abstract
     {
         void Navigate(Type viewModel, object parameter);
         object Parameter { get; }
+        bool CanGoBack { get; }
     }
 }
