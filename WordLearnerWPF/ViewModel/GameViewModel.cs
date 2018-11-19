@@ -106,7 +106,7 @@ namespace WordLearnerWPF.ViewModel
         private void step()
         {
             Random rand = new Random();
-            var r =  rand.Next(StartInd.Value, EndInd);
+            var r =  rand.Next(0, WordDictionary.Count() - 1);
             AskWord = WordDictionary.ElementAt(r).Key;
         }
 

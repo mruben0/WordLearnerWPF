@@ -7,7 +7,6 @@
         Height="400"
         Width="450"
         WindowStartupLocation="CenterScreen"
-        ResizeMode="CanMinimize"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>

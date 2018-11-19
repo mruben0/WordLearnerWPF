@@ -54,6 +54,7 @@ namespace WordLearnerWPF.Services.Impl
                 {
                     for (int i = start; i <= count; i++)
                     {
+                        System.Diagnostics.Debug.WriteLine(i);
                         string ask = string.Empty;
                         string answ = string.Empty;
 
