@@ -41,10 +41,14 @@
         </Controls:WindowCommands>
     </Controls:MetroWindow.RightWindowCommands>
     <Grid>
+        <!--<Grid.Background>
+            <ImageBrush ImageSource="pack://application:,,,/WordLearnerWPF;component/Images/bckgr.jpg" Stretch="UniformToFill"/>
+        </Grid.Background>-->
         <Grid.RowDefinitions>
             <RowDefinition Height="auto"/>
             <RowDefinition Height="*"/>
         </Grid.RowDefinitions>
-        <Frame Margin="10" Grid.Row="1" Name="MainFrame"  NavigationUIVisibility="Hidden"/>
+        <Frame Margin="10" Grid.Row="1" Name="MainFrame"  NavigationUIVisibility="Hidden">           
+        </Frame>
     </Grid>
 </Controls:MetroWindow>

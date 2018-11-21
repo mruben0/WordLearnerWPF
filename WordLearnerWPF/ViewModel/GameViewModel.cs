@@ -47,7 +47,8 @@ namespace WordLearnerWPF.ViewModel
         public override Task Initialize<T>(T param)
         {
             DocumentDto = param as FileDto;
-            RaisePropertyChanged(nameof(DocumentDto));           
+            RaisePropertyChanged(nameof(DocumentDto));
+            RightAnswered = new List<string>();
             return Task.FromResult(0);           
         }
 
@@ -64,6 +65,7 @@ namespace WordLearnerWPF.ViewModel
                 step();
             }
             RaisePropertyChanged(nameof(AllNeedadPopsSelected));
+            RaisePropertyChanged(nameof(TotalCount));
         });
        
         public ICommand SubmitAnswerCommand => new RelayCommand(() =>
@@ -76,23 +78,28 @@ namespace WordLearnerWPF.ViewModel
                 {                   
                     SubmitType = SubmitType.Next;
                     RightCount++;
-                                               }
+                }
                 else
                 {
                     FalseCount++;
-                    
+                    if (RightAnswered.Contains(AskWord))
+                    {
+                        RightAnswered.Remove(AskWord);
+                    }                    
                 }
             }
             else
             {              
                 if (SingleResult == true)
                 {
+                    CheckRights(WordDictionary[AskWord]);
                     RightAnswer = string.Empty;
                     Answer = string.Empty;
                     step();
                     SubmitType = SubmitType.Submit;
                 }
-            }            
+            }
+            RaisePropertyChanged(nameof(TotalCount));
         });
 
         private void getMyDictionary()
@@ -103,9 +110,18 @@ namespace WordLearnerWPF.ViewModel
 
         private void step()
         {
-            Random rand = new Random();
-            var r =  rand.Next(0, WordDictionary.Count() - 1);
-            AskWord = WordDictionary.ElementAt(r).Key;
+            if (WordDictionary.Count != 0)
+            {
+                Random rand = new Random();
+                var r = rand.Next(0, WordDictionary.Count());
+                AskWord = WordDictionary.ElementAt(r).Key;
+            }
+            else
+            {
+                AskWord = "Պրծ, սաղ բառերը արել ես, տի դեմք";
+                EndLabel = null;
+                RaisePropertyChanged(nameof(AllNeedadPopsSelected));
+            }
         }
 
         public Dictionary<string, string> WordDictionary
@@ -155,7 +171,6 @@ namespace WordLearnerWPF.ViewModel
                 RaisePropertyChanged(nameof(EndLabel));
             }
         }
-
 
         public string AskWord
         {
@@ -219,6 +234,23 @@ namespace WordLearnerWPF.ViewModel
             }
         }
 
+        private void CheckRights(string word)
+        {
+            var rightCOunt = RightAnswered.Where(e=> e== word).Count();
+            if (rightCOunt <= 1)
+            {
+                RightAnswered.Add(word);
+            }
+            else
+            {
+                var rightKey = WordDictionary.FirstOrDefault(e=>e.Value == word).Key;
+                WordDictionary.Remove(rightKey);
+            }
+        }
+
+        public int TotalCount => WordDictionary.Count();
+
+        private List<string> RightAnswered { get; set; }
 
         public bool AllNeedadPopsSelected => EndLabel != null && StartLabel != null && StartInd != null && EndInd != 0;
     }

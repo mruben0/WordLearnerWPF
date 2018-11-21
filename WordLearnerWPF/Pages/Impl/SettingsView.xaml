@@ -9,7 +9,7 @@
                       DataContext="{Binding SettingsViewModel, Source={StaticResource Locator}}"
                       xmlns:i="http://schemas.microsoft.com/expression/2010/interactivity"
                       Title="Settings">
-    <Grid>
+    <Grid>        
         <Grid.Resources>
             <Style TargetType="Button"
                    BasedOn="{StaticResource MetroButton}">
