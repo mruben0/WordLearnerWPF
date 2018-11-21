@@ -6,12 +6,25 @@
         Title="Word Learner"
         Height="400"
         Width="450"
+        ResizeMode="CanResizeWithGrip"
         WindowStartupLocation="CenterScreen"
         DataContext="{Binding Main, Source={StaticResource Locator}}">
+    <Controls:MetroWindow.LeftWindowCommands>
+        <Controls:WindowCommands>
+            <Button  Command="{Binding GoBack}">
+                    <Rectangle Width="20"
+                   Height="20"
+                   Fill="{Binding RelativeSource={RelativeSource AncestorType=Button}, Path=Foreground}">
+                        <Rectangle.OpacityMask>
+                            <VisualBrush Stretch="Fill" Visual="{StaticResource appbar_chevron_left}" />
+                        </Rectangle.OpacityMask>
+                    </Rectangle>                  
+            </Button>           
+        </Controls:WindowCommands>
+    </Controls:MetroWindow.LeftWindowCommands>
     <Controls:MetroWindow.RightWindowCommands>
         <Controls:WindowCommands>
-            <Button Content="settings" Command="{Binding SettingsCommand}" />
-            <Button>
+            <Button Command="{Binding SettingsCommand}">
                 <StackPanel Orientation="Horizontal">
                     <Rectangle Width="20"
                    Height="20"
@@ -22,7 +35,7 @@
                     </Rectangle>
                     <TextBlock Margin="4 0 0 0"
                    VerticalAlignment="Center"
-                   Text="deploy cupcakes" />
+                   Text="settings" />
                 </StackPanel>
             </Button>
         </Controls:WindowCommands>

@@ -177,6 +177,9 @@
     <Compile Include="Pages\Impl\HomeView.xaml.cs">
       <DependentUpon>HomeView.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Pages\Impl\SettingsView.xaml.cs">
+      <DependentUpon>SettingsView.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Params\Abstract\IStaticParams.cs" />
     <Compile Include="Params\Impl\FileDto.cs" />
     <Compile Include="Params\Impl\StaticParams.cs" />
@@ -187,10 +190,24 @@
     <Compile Include="Services\Impl\CoreNavigationService.cs" />
     <Compile Include="Services\Impl\DocumentService.cs" />
     <Compile Include="Services\Impl\IOService.cs" />
+    <Compile Include="Themes\ThemeManagerHelper.cs" />
     <Compile Include="ViewModel\GameViewModel.cs" />
     <Compile Include="ViewModel\HomeViewModel.cs" />
     <Compile Include="ViewModel\MainViewModel.cs" />
+    <Compile Include="ViewModel\SettingsViewModel.cs" />
     <Compile Include="ViewModel\ViewModelLocator.cs" />
+    <Page Include="CustomAccents\CustomAccent1.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomAccents\CustomAccent2.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="CustomAccents\CustomTheme.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="MainWindow.xaml">
       <Generator>MSBuild:Compile</Generator>
       <SubType>Designer</SubType>
@@ -208,6 +225,10 @@
       <SubType>Designer</SubType>
     </Page>
     <Page Include="Pages\Impl\HomeView.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Pages\Impl\SettingsView.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

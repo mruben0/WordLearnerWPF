@@ -1,5 +1,4 @@
-﻿using System.Windows.Controls;
-using WordLearnerWPF.Core.Abstract;
+﻿using WordLearnerWPF.Core.Abstract;
 using WordLearnerWPF.Pages.Abstract;
 
 namespace WordLearnerWPF.Pages

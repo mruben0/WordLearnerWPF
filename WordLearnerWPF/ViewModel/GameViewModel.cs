@@ -1,4 +1,5 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using MahApps.Metro;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -9,6 +10,7 @@ using System.Windows.Input;
 using WordLearnerWPF.Core.Abstract;
 using WordLearnerWPF.Params.Abstract;
 using WordLearnerWPF.Params.Impl;
+using System.Windows;
 using WordLearnerWPF.Services.Abstract;
 
 namespace WordLearnerWPF.ViewModel
@@ -45,8 +47,8 @@ namespace WordLearnerWPF.ViewModel
         public override Task Initialize<T>(T param)
         {
             DocumentDto = param as FileDto;
-            RaisePropertyChanged(nameof(DocumentDto));            
-            return Task.FromResult(0);
+            RaisePropertyChanged(nameof(DocumentDto));           
+            return Task.FromResult(0);           
         }
 
         public ICommand OpenFile => new RelayCommand(() =>
@@ -63,12 +65,7 @@ namespace WordLearnerWPF.ViewModel
             }
             RaisePropertyChanged(nameof(AllNeedadPopsSelected));
         });
-
-        public ICommand GoBack => new RelayCommand(() =>
-        {
-            _navigationService.GoBack();
-        });
-
+       
         public ICommand SubmitAnswerCommand => new RelayCommand(() =>
         {            
             if (SubmitType == SubmitType.Submit)
@@ -79,10 +76,11 @@ namespace WordLearnerWPF.ViewModel
                 {                   
                     SubmitType = SubmitType.Next;
                     RightCount++;
-                }
+                                               }
                 else
                 {
                     FalseCount++;
+                    
                 }
             }
             else

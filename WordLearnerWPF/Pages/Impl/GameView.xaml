@@ -11,22 +11,6 @@
       Title="GameView">
     
     <StackPanel>
-        <Button             
-            Width="50"
-            Height="50"
-            HorizontalAlignment="Left"
-            Margin="5"
-            Command="{Binding GoBack}"
-            Style="{DynamicResource MetroCircleButtonStyle}">
-            <Rectangle Width="20"
-                Height="20"
-                Fill="{Binding Path=Foreground, RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type Button}}}">
-                <Rectangle.OpacityMask>
-                    <VisualBrush Stretch="Fill" Visual="{DynamicResource appbar_arrow_left}" />
-                </Rectangle.OpacityMask>
-            </Rectangle>
-        </Button>
-
         <Button Margin="5" Command="{Binding OpenFile}" Content="{Binding DocumentDto.Name}"/>
 
         <StackPanel Orientation="Horizontal">
@@ -64,9 +48,12 @@
                     </TextBox.InputBindings>
                 </TextBox>
             </StackPanel>
-            <Button Command="{Binding SubmitAnswerCommand}"
+            <StackPanel Orientation="Horizontal">
+                            
+                <Button Command="{Binding SubmitAnswerCommand}"
                     IsEnabled="{Binding AllNeedadPopsSelected}"
                     Content="{Binding SubmitType}"/>
+            </StackPanel>
         </StackPanel>
         <Grid>
             <Grid.RowDefinitions>

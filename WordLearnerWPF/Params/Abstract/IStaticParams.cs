@@ -8,9 +8,11 @@ namespace WordLearnerWPF.Params.Abstract
 {
     public interface IStaticParams
     {
-       string AppFolderPath { get; set; }
-       string DocumentFolderPath { get; set; }
-       string SettingsDirectory { get; set; }
-       IList<string> FoldersToCreate { get; set; }
+        string AppFolderPath { get; set; }
+        string DocumentFolderPath { get; set; }
+        string SettingsDirectory { get; set; }
+        string SettingsFile { get; set; }
+        IList<string> FoldersToCreate { get; set; }
+        IList<string> FilesToCeate { get; set; }
     }
 }

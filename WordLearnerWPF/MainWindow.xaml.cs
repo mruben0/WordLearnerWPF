@@ -1,5 +1,6 @@
 ﻿using MahApps.Metro.Controls;
 using WordLearnerWPF.Core.Abstract;
+using WordLearnerWPF.Pages.Impl;
 
 namespace WordLearnerWPF
 {    
@@ -19,5 +20,8 @@ namespace WordLearnerWPF
             }
         }
         public object Parameter { get; set; }
+
+        private MetroWindow settingsView;
+
     }
 }

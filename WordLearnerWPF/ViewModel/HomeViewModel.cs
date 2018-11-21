@@ -1,10 +1,12 @@
 ﻿using GalaSoft.MvvmLight.Command;
+using MahApps.Metro;
 using Microsoft.Win32;
 using System;
 using System.Collections.ObjectModel;
 using System.IO;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Windows;
 using System.Windows.Input;
 using WordLearnerWPF.Core.Abstract;
 using WordLearnerWPF.Params.Abstract;
@@ -62,6 +64,16 @@ namespace WordLearnerWPF.ViewModel
             }
         });
 
+        public ICommand ChangeThemeCommand => new RelayCommand(() =>
+        {
+            if (Accent != string.Empty)
+            {
+                ThemeManager.ChangeAppStyle(Application.Current,
+                                ThemeManager.GetAccent(Accent),
+                                ThemeManager.GetAppTheme("BaseLight"));
+            }          
+        });
+
         public ICommand OpenCommand => new RelayCommand(() =>
         {
             if (SelectedFile != null)
@@ -104,5 +116,14 @@ namespace WordLearnerWPF.ViewModel
                 RaisePropertyChanged(nameof(SelectedFile));
             }
         }
+
+        private string _accent;
+
+        public string Accent
+        {
+            get { return _accent; }
+            set { _accent = value; }
+        }
+
     }
 }
