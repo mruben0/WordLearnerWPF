@@ -1,16 +1,13 @@
 ﻿using GalaSoft.MvvmLight.Command;
-using MahApps.Metro;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
 using System.Linq;
-using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using WordLearnerWPF.Core.Abstract;
 using WordLearnerWPF.Params.Abstract;
 using WordLearnerWPF.Params.Impl;
-using System.Windows;
 using WordLearnerWPF.Services.Abstract;
 
 namespace WordLearnerWPF.ViewModel
@@ -72,7 +69,7 @@ namespace WordLearnerWPF.ViewModel
         {            
             if (SubmitType == SubmitType.Submit)
             {
-                SingleResult = Answer == WordDictionary[AskWord];
+                SingleResult = CheckAnswer();
                 RightAnswer = WordDictionary[AskWord];
                 if (SingleResult == true)
                 {                   
@@ -82,9 +79,9 @@ namespace WordLearnerWPF.ViewModel
                 else
                 {
                     FalseCount++;
-                    if (RightAnswered.Contains(AskWord))
+                    if (RightAnswered.Contains(WordDictionary[AskWord]))
                     {
-                        RightAnswered.Remove(AskWord);
+                        RightAnswered.Remove(WordDictionary[AskWord]);
                     }                    
                 }
             }
@@ -101,6 +98,16 @@ namespace WordLearnerWPF.ViewModel
             }
             RaisePropertyChanged(nameof(TotalCount));
         });
+
+        private bool CheckAnswer()
+        {
+            if (WordDictionary[AskWord].Last() == ' ')
+            {
+                var answerWithSpace = Answer + ' ';
+                return answerWithSpace == WordDictionary[AskWord];
+            }
+            return Answer == WordDictionary[AskWord];
+        }
 
         private void getMyDictionary()
         {
@@ -236,8 +243,8 @@ namespace WordLearnerWPF.ViewModel
 
         private void CheckRights(string word)
         {
-            var rightCOunt = RightAnswered.Where(e=> e== word).Count();
-            if (rightCOunt <= 1)
+            var rightCount = RightAnswered.Where(e=> e== word).Count();
+            if (rightCount <= 1)
             {
                 RightAnswered.Add(word);
             }

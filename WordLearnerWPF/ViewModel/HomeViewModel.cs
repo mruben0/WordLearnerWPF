@@ -124,6 +124,5 @@ namespace WordLearnerWPF.ViewModel
             get { return _accent; }
             set { _accent = value; }
         }
-
     }
 }

@@ -4,6 +4,7 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Reflection;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
@@ -22,10 +23,13 @@ namespace WordLearnerWPF.ViewModel
         private List<KeyValuePair<string, Color>> _colors;
         private List<Accent> _accents;
         private Accent _accent;
+        private string _version;
 
         public SettingsViewModel(IStaticParams staticParams)
         {
             _staticParams = staticParams ?? throw new ArgumentNullException(nameof(staticParams));
+            var versionNumber = Assembly.GetExecutingAssembly().GetName().Version.ToString() ?? "0";
+            Version = "Application " + versionNumber;
         }
         public override Task Initialize<T>(T param)
         {
@@ -143,6 +147,15 @@ namespace WordLearnerWPF.ViewModel
             {
                 var settingsFIle = _staticParams.SettingsFile;
                 File.WriteAllLines(settingsFIle, new string[] { Accent.Name });
+            }
+        }
+    
+        public string Version
+        {
+            get { return _version; }
+            set { _version = value;
+                RaisePropertyChanged(nameof(Version));
+
             }
         }
 

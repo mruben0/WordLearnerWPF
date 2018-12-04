@@ -27,7 +27,7 @@
 
         <GroupBox Grid.Row="1"
                   Margin="5"
-                  Header="The Application">
+                  Header="{Binding Version}">
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="Auto" />
@@ -55,8 +55,8 @@
                 </UniformGrid>
 
                 <UniformGrid Grid.Row="2" Margin="5" Columns="2" Rows="2">
-                    <TextBlock Text="Accents" Margin="0 0 2 0" VerticalAlignment="Center" />
-                    <TextBlock Text="Colors" Margin="2 0 0 0" VerticalAlignment="Center" />
+                    <TextBlock Text="Accent" Margin="0 0 2 0" VerticalAlignment="Center" />
+                    <TextBlock Text="Color" Margin="2 0 0 0" VerticalAlignment="Center" />
 
                     <ComboBox x:Name="AccentSelector"
                               Margin="0 0 2 0"

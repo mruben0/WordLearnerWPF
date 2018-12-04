@@ -16,9 +16,9 @@ namespace WordLearnerWPF.Services.Impl
                 return false;
             }
 
-            string pathFormat = path.Substring(path.Length - format.Length, format.Length);
+            string newPathFormat = path.Substring(path.Length - format.Length, format.Length);
 
-            if (pathFormat == format)
+            if (newPathFormat == format)
             {
                 return true;
             }
