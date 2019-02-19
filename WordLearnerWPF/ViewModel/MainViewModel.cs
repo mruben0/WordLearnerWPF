@@ -80,7 +80,7 @@ namespace WordLearnerWPF.ViewModel
                                                    ThemeManager.GetAccent(color),
                                                    ThemeManager.GetAppTheme("BaseLight"));
             }
-            if (color != null)
+            else if (color != null)
             {
                 var themeColor = (Color)ColorConverter.ConvertFromString(color);
                 var theme = ThemeManager.DetectAppStyle(Application.Current);

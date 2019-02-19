@@ -44,8 +44,10 @@ namespace WordLearnerWPF.ViewModel
         public override Task Initialize<T>(T param)
         {
             DocumentDto = param as FileDto;
-            RaisePropertyChanged(nameof(DocumentDto));
             RightAnswered = new List<string>();
+            RightCount = 0;
+            FalseCount = 0;
+            RaisePropertyChanged(nameof(DocumentDto));
             return Task.FromResult(0);           
         }
 
@@ -111,8 +113,13 @@ namespace WordLearnerWPF.ViewModel
 
         private void getMyDictionary()
         {
-                WordDictionary = _documentService.GetDictionaryFromXls(DocumentDto.Path, StartInd.Value, EndInd, StartLabel, EndLabel);
-                RaisePropertyChanged(nameof(WordDictionary));                   
+            
+          WordDictionary = _documentService.GetDictionaryFromXls(DocumentDto.Path, StartInd.Value, EndInd, StartLabel, EndLabel);
+
+            if (WordDictionary != null)
+            {
+                RaisePropertyChanged(nameof(WordDictionary));
+            }
         }
 
         private void step()

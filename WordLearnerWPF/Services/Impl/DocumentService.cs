@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
 using DocumentFormat.OpenXml.Packaging;
 using DocumentFormat.OpenXml.Spreadsheet;
@@ -29,102 +30,114 @@ namespace WordLearnerWPF.Services.Impl
         {
             Dictionary<string, string> dictionary = new Dictionary<string, string>();
 
-            using (SpreadsheetDocument document =
-                SpreadsheetDocument.Open(path, false))
+            try
             {
-                WorkbookPart wbPart = document.WorkbookPart;
-                int wbPartRowCount = document.WorkbookPart.WorksheetParts.First().Worksheet.Elements<SheetData>().First().Elements<Row>().Count();
-                var count = 0;
-                if (end <= wbPartRowCount)
+                using (SpreadsheetDocument document =
+                SpreadsheetDocument.Open(path, false))
                 {
-                    count = end;
-                }
-                else count = wbPartRowCount;
-
-                Sheet theSheet = wbPart.Workbook.Descendants<Sheet>().First();
-
-                if (theSheet == null)
-                {
-                    throw new ArgumentException("sheetName");
-                }
-
-                WorksheetPart wsPart = (WorksheetPart)(wbPart.GetPartById(theSheet.Id));
-
-                if (start <= count)
-                {
-                    for (int i = start; i <= count; i++)
+                    WorkbookPart wbPart = document.WorkbookPart;
+                    int wbPartRowCount = document.WorkbookPart.WorksheetParts.First().Worksheet.Elements<SheetData>().First().Elements<Row>().Count();
+                    var count = 0;
+                    if (end <= wbPartRowCount)
                     {
-                        System.Diagnostics.Debug.WriteLine(i);
-                        string ask = string.Empty;
-                        string answ = string.Empty;
+                        count = end;
+                    }
+                    else count = wbPartRowCount;
 
-                        foreach (var label in askLabel)
+                    Sheet theSheet = wbPart.Workbook.Descendants<Sheet>().First();
+
+                    if (theSheet == null)
+                    {
+                        throw new ArgumentException("sheetName");
+                    }
+
+                    WorksheetPart wsPart = (WorksheetPart)(wbPart.GetPartById(theSheet.Id));
+
+                    if (start <= count)
+                    {
+                        for (int i = start; i <= count; i++)
                         {
-                            ask += GetCellData(label.ToString(), i, wsPart, wbPart) + " ";
-                        }
-                        foreach (var label in answLabel)
-                        {
-                            answ += GetCellData(label.ToString(), i, wsPart, wbPart) + " ";
-                        }
-                        ask = ask.Remove(ask.Length - 1, 1);
-                        answ = answ.Remove(answ.Length - 1, 1);
-                        if (!dictionary.ContainsKey(ask))
-                        {
-                            dictionary.Add(ask, answ);
+                            System.Diagnostics.Debug.WriteLine(i);
+                            string ask = string.Empty;
+                            string answ = string.Empty;
+
+                            foreach (var label in askLabel)
+                            {
+                                ask += GetCellData(label.ToString(), i, wsPart, wbPart) + " ";
+                            }
+                            foreach (var label in answLabel)
+                            {
+                                answ += GetCellData(label.ToString(), i, wsPart, wbPart) + " ";
+                            }
+                            ask = ask.Remove(ask.Length - 1, 1);
+                            answ = answ.Remove(answ.Length - 1, 1);
+                            if (!dictionary.ContainsKey(ask))
+                            {
+                                dictionary.Add(ask, answ);
+                            }
                         }
                     }
                 }
                 return dictionary;
+
             }
-
-
-            string GetCellData(string label, int i, WorksheetPart wsPart, WorkbookPart wbPart)
+            catch (IOException)
             {
-                string value = string.Empty;
-                Cell theCell = wsPart.Worksheet.Descendants<Cell>().
-                   Where(c => c.CellReference == $"{label}{i}").FirstOrDefault();
-
-                if (theCell != null)
-                {
-                    value = theCell.InnerText;
-
-                    if (theCell.DataType != null)
-                    {
-                        switch (theCell.DataType.Value)
-                        {
-                            case CellValues.SharedString:
-
-                                var stringTable =
-                                    wbPart.GetPartsOfType<SharedStringTablePart>()
-                                    .FirstOrDefault();
-
-                                if (stringTable != null)
-                                {
-                                    value =
-                                        stringTable.SharedStringTable
-                                        .ElementAt(int.Parse(value)).InnerText;
-                                }
-                                else value = "00";
-                                break;
-
-                            case CellValues.Boolean:
-                                switch (value)
-                                {
-                                    case "0":
-                                        value = "FALSE";
-                                        break;
-
-                                    default:
-                                        value = "TRUE";
-                                        break;
-                                }
-                                break;
-                        }
-                    }
-                }
-                else value = "--";
-                return value;
+                return null;
+            }
+            catch (Exception ex)
+            {
+                throw new AggregateException(ex);
             }
         }
+
+        private string GetCellData(string label, int i, WorksheetPart wsPart, WorkbookPart wbPart)
+        {
+            string value = string.Empty;
+            Cell theCell = wsPart.Worksheet.Descendants<Cell>().
+               Where(c => c.CellReference == $"{label}{i}").FirstOrDefault();
+
+            if (theCell != null)
+            {
+                value = theCell.InnerText;
+
+                if (theCell.DataType != null)
+                {
+                    switch (theCell.DataType.Value)
+                    {
+                        case CellValues.SharedString:
+
+                            var stringTable =
+                                wbPart.GetPartsOfType<SharedStringTablePart>()
+                                .FirstOrDefault();
+
+                            if (stringTable != null)
+                            {
+                                value =
+                                    stringTable.SharedStringTable
+                                    .ElementAt(int.Parse(value)).InnerText;
+                            }
+                            else value = "00";
+                            break;
+
+                        case CellValues.Boolean:
+                            switch (value)
+                            {
+                                case "0":
+                                    value = "FALSE";
+                                    break;
+
+                                default:
+                                    value = "TRUE";
+                                    break;
+                            }
+                            break;
+                    }
+                }
+            }
+            else value = "--";
+            return value;
+        }
+
     }
 }

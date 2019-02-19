@@ -5,18 +5,25 @@
       xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:WordLearnerWPF.Pages"
+      xmlns:smtx="clr-namespace:ShowMeTheXAML;assembly=ShowMeTheXAML"
       mc:Ignorable="d" 
       DataContext="{Binding Home, Source={StaticResource Locator}}"
       d:DesignHeight="450" d:DesignWidth="800"      
       Title="HomeView">
     <Page.Resources>
-        <Style TargetType="{x:Type MenuItem}"
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <!-- note you only need bring in these extra resource dictionaries when using non-default styles, so only bring them into your controls where the default style is not what you want -->
+                <ResourceDictionary Source="pack://application:,,,/MaterialDesignThemes.Wpf;component/Themes/MaterialDesignTheme.Slider.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+            <Style TargetType="{x:Type MenuItem}"
           BasedOn="{StaticResource MetroMenuItem}">
-            <Setter Property="HorizontalContentAlignment"
+                <Setter Property="HorizontalContentAlignment"
           Value="Left" />
-            <Setter Property="VerticalContentAlignment"
+                <Setter Property="VerticalContentAlignment"
           Value="Center" />
-        </Style>
+            </Style>
+        </ResourceDictionary>     
     </Page.Resources>
     
     <ScrollViewer VerticalScrollBarVisibility="Auto" BorderThickness="0">
@@ -36,8 +43,9 @@
                     <GridViewColumn Header="Name" Width="auto" DisplayMemberBinding="{Binding Name}" />
                 </GridView>
             </ListView.View>
-        </ListView>       
-        <Button Command="{Binding AddFileCommand}">Add File</Button>
+        </ListView>
+        
+            <Button Command="{Binding AddFileCommand}">Add File</Button>
     </StackPanel>
     </ScrollViewer>
 </Page>
